@@ -166,6 +166,7 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 require get_template_directory() . '/inc/post-types.php';
 
 add_image_size("slider-velicina", 1156, 407, true);
+add_image_size("thumbnail-mini", 32, 32, true);
 
 function debug($input, $die = false) {
     echo '<pre>';
@@ -174,6 +175,14 @@ function debug($input, $die = false) {
     if ($die) {
         die();
     }
+}
+
+function get_first_x_words($text, $words = 7) {
+    $text = wp_strip_all_tags($text);
+    $text = trim(preg_replace('/\s+/', ' ', $text)); // Remove new lines
+    $textAR = explode(' ', $text);
+    $text = array_slice($textAR, 0, $words);
+    return implode(" ", $text) . "...";
 }
 
 if( function_exists('acf_add_options_page') ) {

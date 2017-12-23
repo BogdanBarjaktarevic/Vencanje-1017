@@ -29,22 +29,32 @@
                         <div id="footcol2" class="four columns">
                             <ul>
                                 <li class="widget-container">
-                                    <h2 class="widget-title">Popular Post</h2>
+                                    <h2 class="widget-title">Latest Post</h2>
                                     <ul class="rp-widget">
+                                        <?php $the_query = new WP_Query([
+                                            'post_type' => 'post',
+                                            'orderby' => 'date',
+                                            'order' => DESC,
+                                            'posts_per_page' => 2
+                                        ]);
+
+                                        if ( $the_query->have_posts() ) :
+                                        while ( $the_query->have_posts() ) :
+                                        $the_query->the_post(); ?>
+
                                         <li>
-                                            <img alt="" src=<?= get_template_directory_uri() . "/images/content/small-img1.jpg"?> />
-                                            <h3><a href="#">This is about our wedding event</a></h3>
-                                            <span class="smalldate">June 24, 2013</span>
-                                            <p>Nunc lacinia, lectus sed posuere laoreet, dui velit varius enim, id feugiat risus...</p>
+                                            <?php $slika = get_field('hero_image')?>
+                                            <img alt="" src=<?=$slika['sizes']['thumbnail-mini']?> />
+                                            <h3><a href="<?php get_the_permalink () ?>"><?php the_title() ?></a></h3>
+                                            <?php $datum = strtotime(get_the_date()); ?>
+                                            <span class="smalldate"><?=date('d',$datum)?></span>
+                                            <p><?= get_first_x_words(get_the_content(),10) ?></p>
                                             <span class="clear"></span>
                                         </li>
-                                        <li class="last">
-                                            <img alt="" src=<?= get_template_directory_uri() . "/images/content/small-img2.jpg"?> />
-                                            <h3><a href="#">We are getting married part II</a></h3>
-                                            <span class="smalldate">June 24, 2013</span>
-                                            <p>Nunc lacinia, lectus sed posuere laoreet, dui velit varius enim, id feugiat risus...</p>
-                                            <span class="clear"></span>
-                                        </li>
+
+                                        <?php endwhile;
+                                                endif;
+                                        wp_reset_postdata(); ?>
                                     </ul>
                                 </li>
                             </ul>

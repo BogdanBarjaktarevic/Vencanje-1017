@@ -29,12 +29,12 @@
                     <?php $the_query = new WP_Query([
                           'post_type' => 'post',
                           'orderby' => 'date',
-                          'order' => ASC
+                          'order' => DESC
                     ]);
 
                     if ( $the_query->have_posts() ) {
-                    while ( $the_query->have_posts() ) {
-                    $the_query->the_post(); ?>
+                        while ( $the_query->have_posts() ) {
+                        $the_query->the_post(); ?>
 
                     <article class="post">
                         <div class="date-wrapper">
